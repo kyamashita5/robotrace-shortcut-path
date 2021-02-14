@@ -29,7 +29,7 @@ plt.axes().set_aspect('equal')
 plt.grid()
 plt.show()
 
-def get_adjcent(idx_x, idx_y, nodes, dl = 0.01, margin = 0.05, ang_th = np.pi/180.0, curv_lim = 10.0):
+def get_adjacent(idx_x, idx_y, nodes, dl = 0.01, margin = 0.05, ang_th = np.pi/180.0, curv_lim = 10.0):
     ang = course_angle(nodes[:,idx_y], idx_x)
     pt0 = nodes[idx_x,idx_y]
     list_adj = []
@@ -115,7 +115,7 @@ dl = 0.01
 
 idx_x0 = 0
 idx_y0 = 0
-list_adj = get_adjcent(idx_x0, idx_y0, nodes, dl)
+list_adj = get_adjacent(idx_x0, idx_y0, nodes, dl)
 plt.plot(nodes[:,0,0], nodes[:,0,1])
 for adj in list_adj:
     draw_arch(adj[2], adj[1], nodes, dl)
@@ -146,7 +146,7 @@ while len(h) > 0:
     decided[node[0], node[1]] = True
     if (node[0] == (len(nodes)-1)) and (node[1] == 0):
         break
-    list_adj = get_adjcent(node[0], node[1], nodes, dl)
+    list_adj = get_adjacent(node[0], node[1], nodes, dl)
     for adj in list_adj:
         cost_dif = adj[0]
         dst = adj[1]

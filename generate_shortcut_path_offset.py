@@ -96,7 +96,7 @@ def cost_turn(l, c, acc = 6.0, vmax = 3.0, vturn = 1.0, cf = 10.0):
     return t
 
 #@jit
-def get_adjcent(idx_x, idx_y, pts, dl = 0.01, lim_idx_y = 7, ang_th = np.pi/180.0, curv_lim = 10.0):
+def get_adjacent(idx_x, idx_y, pts, dl = 0.01, lim_idx_y = 7, ang_th = np.pi/180.0, curv_lim = 10.0):
     idx_i = idx_x + 1
     ang = course_angle(pts, idx_x)
     pt0 = pts[idx_x] + dl * idx_y * np.array([-np.sin(ang), np.cos(ang)])
@@ -226,7 +226,7 @@ lim_idx_y = 5
 
 idx_x0 = 0
 idx_y0 = 0
-list_adj = get_adjcent(idx_x0, idx_y0, pts, dl, lim_idx_y)
+list_adj = get_adjacent(idx_x0, idx_y0, pts, dl, lim_idx_y)
 plt.plot(pts[:,0], pts[:,1])
 for adj in list_adj:
     draw_arch(adj[2], adj[1], pts, dl)
@@ -253,7 +253,7 @@ while len(h) > 0:
     decided[node[0], node[1]+lim_idx_y] = True
     if (node[0] == (len(pts)-1)) and (node[1] == 0):
         break
-    list_adj = get_adjcent(node[0], node[1], pts, dl, lim_idx_y)
+    list_adj = get_adjacent(node[0], node[1], pts, dl, lim_idx_y)
     for adj in list_adj:
         cost_dif = adj[0]
         dst = adj[1]

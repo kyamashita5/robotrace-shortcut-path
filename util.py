@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 
 def arith_div(x, y):
     if x >= 0.0:
