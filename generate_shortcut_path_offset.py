@@ -38,18 +38,18 @@ plt.plot(pts[:, 0], pts[:, 1])
 plt.show()
 
 #@jit
-def cource_angle(pts, idx, m = 5):
+def course_angle(pts, idx, m = 5):
     if idx < m:
-        return cource_angle(pts, m,m=m)
+        return course_angle(pts, m,m=m)
     elif idx > (len(pts) - m - 1):
-        return cource_angle(pts, len(pts)-1-m, m=m)
+        return course_angle(pts, len(pts)-1-m, m=m)
     m = min(m, idx, len(pts)-idx-1)
     dx = pts[idx+m, 0] - pts[idx-m, 0]
     dy = pts[idx+m, 1] - pts[idx-m, 1]    
     return np.arctan2(dy,dx)
 
 for idx, pt in enumerate(pts):
-    ang = cource_angle(pts, idx)
+    ang = course_angle(pts, idx)
     pt2 = pt + 0.01*np.array([np.cos(ang), np.sin(ang)])
     plt.plot([pt[0], pt2[0]], [pt[1], pt2[1]], color='m')
 plt.show()
@@ -98,7 +98,7 @@ def cost_turn(l, c, acc = 6.0, vmax = 3.0, vturn = 1.0, cf = 10.0):
 #@jit
 def get_adjcent(idx_x, idx_y, pts, dl = 0.01, lim_idx_y = 7, ang_th = np.pi/180.0, curv_lim = 10.0):
     idx_i = idx_x + 1
-    ang = cource_angle(pts, idx_x)
+    ang = course_angle(pts, idx_x)
     pt0 = pts[idx_x] + dl * idx_y * np.array([-np.sin(ang), np.cos(ang)])
     list_adj = []
     if (idx_i < len(pts)) and (idx_y == 0):
@@ -106,7 +106,7 @@ def get_adjcent(idx_x, idx_y, pts, dl = 0.01, lim_idx_y = 7, ang_th = np.pi/180.
     cmin = -10.0
     cmax = 10.0
     while (idx_i < len(pts)):
-        ang1 = cource_angle(pts, idx_i)
+        ang1 = course_angle(pts, idx_i)
         pt_l = pts[idx_i] + lim_idx_y * dl * np.array([-np.sin(ang1), np.cos(ang1)])
         dif_t_l = np.dot(np.array([np.cos(ang), np.sin(ang)]), pt_l-pt0)
         dif_n_l = np.dot(np.array([-np.sin(ang), np.cos(ang)]), pt_l-pt0)
@@ -171,9 +171,9 @@ def get_adjcent(idx_x, idx_y, pts, dl = 0.01, lim_idx_y = 7, ang_th = np.pi/180.
     return list_adj
 
 def draw_arch(node0, node1, pts, dl = 0.01, ang_th = np.pi/180.0):
-    ang0 = cource_angle(pts, node0[0])
+    ang0 = course_angle(pts, node0[0])
     pt0 = pts[node0[0]] + dl * node0[1] * np.array([-np.sin(ang0), np.cos(ang0)])
-    ang1 = cource_angle(pts, node1[0])
+    ang1 = course_angle(pts, node1[0])
     pt1 = pts[node1[0]] + dl * node1[1] * np.array([-np.sin(ang1), np.cos(ang1)])
     dif_ang = ang1 - ang0
     dif_ang = (dif_ang - 2.0 * np.pi) if (dif_ang > np.pi) else dif_ang
