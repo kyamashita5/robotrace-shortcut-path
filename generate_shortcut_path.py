@@ -82,7 +82,7 @@ def get_adjacent(idx_x, idx_y, nodes, dl = 0.01, margin = 0.05, ang_th = np.pi/1
     return list_adj
 
 # 2つのノードを結ぶアークを描画する
-def draw_arch(node0, node1, nodes, dl = 0.001, ang_th = np.pi/180.0):
+def draw_arc(node0, node1, nodes, dl = 0.001, ang_th = np.pi/180.0):
     ang0 = course_angle(nodes[:,node0[1]], node0[0])
     pt0 = nodes[node0[0], node0[1]]
     ang1 = course_angle(nodes[:,node1[1]], node1[0])
@@ -123,8 +123,8 @@ idx_y0 = 0
 list_adj = get_adjacent(idx_x0, idx_y0, nodes, dl)
 plt.plot(nodes[:,0,0], nodes[:,0,1])
 for adj in list_adj:
-    draw_arch(adj[2], adj[1], nodes, dl)
-print('num of archs : ' + str(len(list_adj)))
+    draw_arc(adj[2], adj[1], nodes, dl)
+print('num of arcs : ' + str(len(list_adj)))
 plt.axes().set_aspect('equal')
 plt.grid()
 plt.show()
@@ -169,7 +169,7 @@ plt.plot(nodes[:,0,0], nodes[:,0,1])
 dst = [len(nodes)-1, 0]
 while True:
     src = srcs[dst[0], dst[1]]
-    draw_arch(src, dst, nodes, dl)
+    draw_arc(src, dst, nodes, dl)
     #print(src, dst)
     if src[0] == 0 and src[1] == 0:
         break
